@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#cc0000">
+<title>Sahadev K A — Research. Insight. Direction.</title>
+<style>
+  :root{
+    --red:#cc0000; --red-dark:#a80000; --ink:#171717; --muted:#666;
+    --line:#dedede; --paper:#fff; --soft:#f4f4f4; --max:1180px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(var(--max),calc(100% - 48px));margin:auto}
+  .topline{height:6px;background:var(--red)}
+  header{border-bottom:1px solid var(--line);background:#fff}
+  .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;align-items:center;gap:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:12px}
+  .mark{width:39px;height:39px;display:grid;place-items:center;border:3px solid var(--red);color:var(--red);font-weight:900;font-size:23px;line-height:1}
+  .navlinks{display:flex;gap:26px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .navlinks a:hover,.textlink:hover{color:var(--red)}
+  .hero{position:relative;overflow:hidden;background:var(--ink);color:#fff;padding:84px 0 76px}
+  .hero:after{content:"";position:absolute;right:-110px;top:-190px;width:570px;height:570px;border:1px solid rgba(255,255,255,.12);border-radius:50%;box-shadow:0 0 0 55px rgba(255,255,255,.025),0 0 0 110px rgba(255,255,255,.02)}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.45fr .55fr;gap:54px;align-items:end}
+  .eyebrow{display:flex;align-items:center;gap:11px;color:#ff5959;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+  .eyebrow:before{content:"";width:30px;height:3px;background:var(--red)}
+  h1{font-size:clamp(46px,7vw,86px);line-height:.99;letter-spacing:-.055em;margin:22px 0 24px;font-weight:800}
+  h1 span{color:#ff3434}
+  .hero p{max-width:680px;color:#d4d4d4;font-size:18px;margin:0 0 30px}
+  .actions{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 18px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:1px solid #fff;transition:.2s}
+  .btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.primary:hover{background:var(--red-dark)}
+  .btn.secondary:hover{background:#fff;color:var(--ink)}
+  .hero-side{border-left:1px solid #444;padding-left:26px;margin-bottom:5px}
+  .side-label{font-size:10px;letter-spacing:.17em;color:#aaa;text-transform:uppercase;font-weight:800}
+  .side-value{font-size:16px;font-weight:700;margin:5px 0 21px}
+  .side-value small{display:block;color:#aaa;font-size:12px;font-weight:400}
+  .section{padding:76px 0}
+  .section.soft{background:var(--soft)}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:32px}
+  .kicker{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--red)}
+  h2{font-size:clamp(29px,4vw,43px);letter-spacing:-.04em;line-height:1.1;margin:8px 0 0}
+  .section-intro{max-width:490px;color:var(--muted);font-size:14px;margin:0}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+  .about-copy{font-size:17px;line-height:1.8;color:#333}
+  .about-copy strong{color:var(--ink)}
+  .principles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .principle{padding:20px;border:1px solid var(--line);background:#fff;min-height:135px}
+  .principle .num{font-size:11px;font-weight:800;color:var(--red);letter-spacing:.1em}
+  .principle h3{font-size:16px;margin:12px 0 5px}
+  .principle p{font-size:12px;color:var(--muted);margin:0}
+  .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .cap{padding:25px 23px;border-top:4px solid var(--red);background:#fff;box-shadow:0 5px 22px rgba(0,0,0,.035)}
+  .cap h3{font-size:17px;margin:0 0 9px}
+  .cap p{font-size:13px;color:var(--muted);margin:0}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+  .tag{font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;padding:6px 8px;background:#f0f0f0;color:#444}
+  .timeline{border-left:2px solid #d6d6d6;margin:10px 0 0 8px;padding-left:28px}
+  .job{position:relative;padding:0 0 29px}
+  .job:last-child{padding-bottom:0}
+  .job:before{content:"";position:absolute;left:-36px;top:6px;width:12px;height:12px;background:var(--red);border:3px solid #fff;box-shadow:0 0 0 1px var(--red);border-radius:50%}
+  .job-top{display:flex;justify-content:space-between;gap:18px;align-items:baseline}
+  .job h3{margin:0;font-size:19px}
+  .job .date{font-size:11px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+  .job .role{font-size:13px;color:#555;margin:2px 0 7px}
+  .job p{font-size:13px;color:var(--muted);max-width:800px;margin:0}
+  .focus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#ddd;border:1px solid #ddd}
+  .focus{background:#fff;padding:22px 18px;min-height:125px}
+  .focus .index{font-size:10px;color:var(--red);font-weight:800;letter-spacing:.12em}
+  .focus h3{font-size:14px;margin:13px 0 0}
+  .education{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .edu{padding:22px;background:#fff;border:1px solid var(--line)}
+  .edu h3{margin:0 0 6px;font-size:15px}
+  .edu p{margin:0;color:var(--muted);font-size:12px}
+  .edu .year{font-size:10px;color:var(--red);font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+  .bottom-cta{background:var(--red);color:#fff;padding:56px 0}
+  .cta-row{display:flex;justify-content:space-between;align-items:center;gap:28px}
+  .bottom-cta h2{font-size:clamp(28px,4vw,42px);max-width:620px}
+  .bottom-cta p{margin:12px 0 0;color:#ffe2e2;font-size:14px}
+  .bottom-cta .btn{border-color:#fff}
+  .bottom-cta .btn:hover{background:#fff;color:var(--red)}
+  footer{background:#111;color:#aaa;padding:22px 0;font-size:10px;letter-spacing:.07em;text-transform:uppercase}
+  .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .redline{height:3px;width:58px;background:var(--red);margin-top:20px}
+  @media(max-width:800px){
+    .nav{height:auto;padding:17px 0;align-items:flex-start}.navlinks{gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:10px}
+    .hero{padding:62px 0}.hero-grid,.about-grid{grid-template-columns:1fr;gap:35px}.hero-side{display:grid;grid-template-columns:1fr 1fr;border-left:0;border-top:1px solid #444;padding:20px 0 0;gap:0 20px}
+    .side-value{margin-bottom:12px}.section{padding:58px 0}.section-head{align-items:flex-start;flex-direction:column;gap:14px}
+    .cap-grid{grid-template-columns:1fr 1fr}.focus-grid{grid-template-columns:1fr 1fr}.cta-row{align-items:flex-start;flex-direction:column}
+  }
+  @media(max-width:520px){
+    .wrap{width:min(var(--max),calc(100% - 32px))}.brand{font-size:10px;letter-spacing:.06em}.mark{width:33px;height:33px;font-size:19px}
+    .navlinks{max-width:170px}.hero p{font-size:16px}.cap-grid,.principles,.education{grid-template-columns:1fr}.focus-grid{grid-template-columns:1fr 1fr}
+    .job-top{display:block}.job .date{display:block;margin-top:4px}.section-head{margin-bottom:24px}
+  }
+  @media print{
+    .navlinks,.actions,.bottom-cta .btn{display:none!important}
+    .hero{padding:40px 0}.section{padding:35px 0}.wrap{width:94%}
+  }
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Sahadev home"><span class="mark">S</span><span>Sahadev K A <span style="color:#cc0000">/</span> Research &amp; Insights</span></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="#about">Profile</a><a href="#capabilities">Capabilities</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Research-led. Decision-focused.</div>
+        <h1>Turning market<br>signals into <span>direction.</span></h1>
+        <p>I'm Sahadev K A, a Senior Research Analyst focused on making complex markets, emerging technologies and competitive shifts easier to understand—and more useful for business decisions.</p>
+        <div class="actions">
+          <a class="btn primary" href="mailto:sahadevska@gmail.com">Let's connect <span aria-hidden="true">↗</span></a>
+          <a class="btn secondary" href="#experience">Explore my journey <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <aside class="hero-side">
+        <div><div class="side-label">Current role</div><div class="side-value">Senior Research Analyst<small>Ideapoke</small></div></div>
+        <div><div class="side-label">Based in</div><div class="side-value">Bengaluru<small>Karnataka, India</small></div></div>
+        <div><div class="side-label">Core lens</div><div class="side-value">Market intelligence<small>Technology · Strategy · Growth</small></div></div>
+        <div><div class="side-label">Approach</div><div class="side-value">Evidence to action<small>Structured, practical, clear</small></div></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="kicker">01 / Profile</div><h2>Curiosity, structured<br>into clarity.</h2></div>
+        <p class="section-intro">A market researcher with a technology lens and a practical focus on translating information into insight.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy">
+          My work sits at the intersection of <strong>market research, emerging technology and business strategy</strong>. I explore new technology domains, bring structure to fragmented information, and develop research outputs that help teams see what is changing, why it matters and where to focus next.
+          <br><br>
+          I also work with Customer Success to understand client requirements and shape them into customised research reports—connecting the question a client asks with the evidence and analysis needed to answer it.
+          <div class="redline"></div>
+        </div>
+        <div class="principles">
+          <article class="principle"><div class="num">01 / DISCOVER</div><h3>Start with the question</h3><p>Clarify the decision, audience and research objective before collecting information.</p></article>
+          <article class="principle"><div class="num">02 / STRUCTURE</div><h3>Make complexity usable</h3><p>Organise market signals into frameworks, comparisons and clear narratives.</p></article>
+          <article class="principle"><div class="num">03 / VALIDATE</div><h3>Ground it in evidence</h3><p>Prioritise credible sources, transparent assumptions and defensible analysis.</p></article>
+          <article class="principle"><div class="num">04 / APPLY</div><h3>Connect insight to action</h3><p>Shape findings around the choices business teams need to make.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft" id="capabilities">
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="kicker">02 / Capabilities</div><h2>What I bring<br>to the table.</h2></div>
+        <p class="section-intro">A blend of research fundamentals, analytical thinking and structured communication.</p>
+      </div>
+      <div class="cap-grid">
+        <article class="cap"><h3>Market &amp; Industry Intelligence</h3><p>Industry snapshots, market dynamics, growth drivers, headwinds, maturity signals and opportunity assessment.</p><div class="tags"><span class="tag">Secondary research</span><span class="tag">Syndicated reports</span></div></article>
+        <article class="cap"><h3>Competitive Intelligence</h3><p>Competitive landscapes, positioning, strategic moves, differentiation and structured market maps.</p><div class="tags"><span class="tag">Benchmarking</span><span class="tag">Positioning</span></div></article>
+        <article class="cap"><h3>Research Storytelling</h3><p>Turn complex research into decision-ready narratives, executive summaries and consulting-style frameworks.</p><div class="tags"><span class="tag">Synthesis</span><span class="tag">Frameworks</span></div></article>
+        <article class="cap"><h3>Market Sizing &amp; Analysis</h3><p>Assess market evidence, growth patterns, segment splits and assumptions while keeping source quality visible.</p><div class="tags"><span class="tag">Market sizing</span><span class="tag">Trend analysis</span></div></article>
+        <article class="cap"><h3>Client &amp; Account Planning</h3><p>Work across teams to clarify client asks, define research scope and tailor deliverables to business needs.</p><div class="tags"><span class="tag">Account planning</span><span class="tag">Custom research</span></div></article>
+        <article class="cap"><h3>Research Process Design</h3><p>Build repeatable report structures, prompts and quality rules that improve consistency and research workflows.</p><div class="tags"><span class="tag">Templates</span><span class="tag">Workflow design</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="kicker">03 / Experience</div><h2>Built across research,<br>insight and industry.</h2></div>
+        <p class="section-intro">Experience across market research and business insights, supported by a foundation in operations and engineering.</p>
+      </div>
+      <div class="timeline">
+        <article class="job"><div class="job-top"><h3>Ideapoke</h3><span class="date">Jun 2024 — Present</span></div><div class="role">Senior Research Analyst · Bengaluru, India</div><p>Develop market and industry research, explore emerging technology areas, and translate client requirements into customised research reports in collaboration with Customer Success.</p></article>
+        <article class="job"><div class="job-top"><h3>VMware</h3><span class="date">Jun 2021 — Dec 2023</span></div><div class="role">Analyst, Business Research &amp; Insights · Bengaluru, India</div><p>Worked in business research and insights, building on experience in structured research and market analysis.</p></article>
+        <article class="job"><div class="job-top"><h3>IDC</h3><span class="date">Jun 2019 — Jun 2021</span></div><div class="role">Associate Market Analyst · Greater Bengaluru Area</div><p>Built an early-career foundation in market analysis and research.</p></article>
+        <article class="job"><div class="job-top"><h3>Mangalore Chemicals &amp; Fertilizers Ltd. — Adventz Group</h3><span class="date">Apr 2018 — May 2018</span></div><div class="role">Summer Intern · Mangalore</div><p>Project: “The Role of Logistics in Supply Chain Management”—a study related to Mangalore Chemicals and Fertilizers Limited.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="kicker">04 / Areas of curiosity</div><h2>Following what’s<br>next.</h2></div>
+        <p class="section-intro">Research interests span technology shifts, market structure and the business implications of change.</p>
+      </div>
+      <div class="focus-grid">
+        <article class="focus"><div class="index">FOCUS 01</div><h3>Emerging Technology &amp; Technology 4.0</h3></article>
+        <article class="focus"><div class="index">FOCUS 02</div><h3>AI, Data &amp; Digital Infrastructure</h3></article>
+        <article class="focus"><div class="index">FOCUS 03</div><h3>Competitive Positioning &amp; Market Evolution</h3></article>
+        <article class="focus"><div class="index">FOCUS 04</div><h3>Research Automation &amp; Insight Workflows</h3></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="education">
+    <div class="wrap">
+      <div class="section-head">
+        <div><div class="kicker">05 / Education</div><h2>Foundations that<br>shape my lens.</h2></div>
+      </div>
+      <div class="education">
+        <article class="edu"><div class="year">2017 — 2019</div><h3>St Joseph’s Institute of Management</h3><p>PGDM · Operations and Marketing</p></article>
+        <article class="edu"><div class="year">2013 — 2017</div><h3>St Joseph Engineering College, Mangaluru</h3><p>Bachelor of Engineering · Mechanical Engineering</p></article>
+      </div>
+      <div style="margin-top:22px;display:flex;gap:28px;flex-wrap:wrap">
+        <div><div class="kicker">Certification</div><strong style="font-size:14px">Competent Leader</strong></div>
+        <div><div class="kicker">Languages</div><strong style="font-size:14px">Tulu · Kannada · English · Hindi · French</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-cta" id="contact">
+    <div class="wrap cta-row">
+      <div><div class="eyebrow" style="color:#fff">Open to meaningful conversations</div><h2>Have a research question worth exploring?</h2><p>Let’s connect around market intelligence, emerging technologies and insight-led decisions.</p></div>
+      <div class="actions"><a class="btn" href="mailto:sahadevska@gmail.com">Email me ↗</a><a class="btn" href="https://www.linkedin.com/in/sahadev-k-a-462141137/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap footer-row"><span>© Sahadev K A · Personal profile</span><span>Research with clarity. Decisions with confidence.</span></div></footer>
+</body>
+</html>
