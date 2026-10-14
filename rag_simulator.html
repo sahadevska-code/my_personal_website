@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAG Simulator — Learn by Exploring</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#65718a;--line:#dfe6f0;--blue:#4263eb;--blue2:#e9efff;--teal:#0f9d8a;--teal2:#e3f7f2;--amber:#c47a10;--amber2:#fff3dc;--purple:#8157d9;--purple2:#f0eaff;--shadow:0 8px 24px #23345a0d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{padding:30px max(22px,calc((100vw - 1180px)/2));background:linear-gradient(120deg,#172b65,#3558bd);color:white}
+.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;font-weight:800;opacity:.8}h1{font-size:clamp(27px,4vw,40px);line-height:1.1;margin:8px 0 10px}header p{max-width:760px;margin:0;color:#e0e8ff}
+main{max-width:1180px;margin:24px auto;padding:0 18px 40px}.callout{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 17px;margin-bottom:20px;box-shadow:var(--shadow)}.callout strong{color:#2949b2}
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}.stage{position:relative;border:1px solid var(--line);border-radius:13px;padding:13px 12px;background:#fff;cursor:pointer;text-align:left;transition:.18s;min-height:102px}.stage:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.stage.active{border:2px solid var(--blue);background:var(--blue2)}.stage .num{font-size:11px;font-weight:800;color:var(--blue)}.stage b{display:block;margin:4px 0;font-size:14px}.stage small{color:var(--muted);display:block;line-height:1.3}.layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:18px;align-items:start}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px}.panel h2{font-size:19px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 17px}.step-title{display:flex;align-items:center;gap:10px;margin-bottom:12px}.bubble{width:34px;height:34px;border-radius:10px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-weight:800;flex-shrink:0}
+label{font-size:12px;font-weight:800;color:#4e5b74;display:block;margin:12px 0 6px}textarea,input,select{width:100%;border:1px solid #d4ddeb;border-radius:10px;padding:11px 12px;font:inherit;background:white;color:var(--ink)}textarea{resize:vertical;min-height:95px}button{border:0;border-radius:10px;padding:10px 14px;font-weight:750;font:inherit;cursor:pointer;transition:.15s}button:hover{filter:brightness(.97)}.primary{background:var(--blue);color:white}.secondary{background:#edf1f8;color:#293651}.rowbtn{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;background:#eef2f8;color:#4b5a75}.pill.blue{background:var(--blue2);color:#2949b2}.pill.green{background:var(--teal2);color:#087a6d}.pill.amber{background:var(--amber2);color:#9a5e08}
+.doc-list{display:grid;gap:9px}.doc{border:1px solid var(--line);border-radius:11px;padding:12px;background:#fbfcff}.doc-head{display:flex;justify-content:space-between;gap:10px;align-items:center;font-weight:800;font-size:13px}.doc p{margin:7px 0 0;font-size:13px;color:#4f5b70}.chunk-grid{display:grid;gap:9px}.chunk{border:1px solid #cdd8f9;border-radius:11px;padding:12px;background:#f7f9ff}.chunk h4{margin:0 0 6px;font-size:13px;color:#2949b2}.chunk p{margin:0;font-size:13px}.chunk .meta{margin-top:8px;font-size:11px;color:#69758e}
+.vectors{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.vector{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;background:#fbfcff}.vector b{display:block;font-size:12px}.vector code{font-size:11px;color:#52617d;display:block;margin-top:4px;word-break:break-word}
+.score-row{display:grid;grid-template-columns:1fr 58px;gap:10px;align-items:center;margin:12px 0}.scorebar{height:9px;border-radius:99px;background:#edf0f6;overflow:hidden}.scorebar span{display:block;height:100%;background:linear-gradient(90deg,#5e7bf4,#13a58f);border-radius:99px;transition:width .4s}.score{font-weight:850;font-size:13px;text-align:right}.retrieved{border:1px solid #b8e7dd;background:#f2fcf9;border-radius:11px;padding:12px;margin:8px 0}.retrieved h4{font-size:13px;margin:0 0 5px}.retrieved p{font-size:13px;margin:0}.answer{background:#f7f3ff;border:1px solid #dfd2ff;border-radius:12px;padding:15px}.answer h3{font-size:14px;color:#6540b5;margin:0 0 7px}.answer p{margin:0;white-space:pre-wrap}.explain{border-left:3px solid var(--blue);padding:9px 12px;background:#f7f9ff;border-radius:0 9px 9px 0;color:#4c5870;font-size:13px;margin-top:12px}.hidden{display:none!important}.status{font-size:12px;color:var(--muted);margin-top:8px}.tiny{font-size:12px;color:var(--muted)}.quiz{display:grid;gap:9px}.quiz button{background:#f4f6fb;text-align:left;border:1px solid var(--line)}.quiz button.correct{background:var(--teal2);border-color:#8bd8c9}.quiz button.wrong{background:#fff0ef;border-color:#ffc1bc}.footer{color:var(--muted);text-align:center;font-size:12px;padding:12px}
+@media(max-width:800px){.pipeline{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.stage:last-child{grid-column:span 2}.vectors{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.pipeline{grid-template-columns:1fr}.stage:last-child{grid-column:auto}.vectors{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Interactive learning lab</div><h1>RAG Simulator</h1><p>Follow a question from document preparation to retrieval and answer generation. Change the documents or question, run each stage, and see what the system is doing.</p></header>
+<main>
+<div class="callout"><strong>Key idea:</strong> documents are usually chunked and embedded <em>before</em> the user asks a question. At query time, the question is embedded, relevant chunks are retrieved, and those chunks are added to the prompt sent to the LLM.</div>
+<nav class="pipeline" aria-label="RAG steps">
+<button class="stage active" data-step="0"><span class="num">STEP 01</span><b>Documents</b><small>Collect source knowledge</small></button>
+<button class="stage" data-step="1"><span class="num">STEP 02</span><b>Chunk + Embed</b><small>Prepare searchable chunks</small></button>
+<button class="stage" data-step="2"><span class="num">STEP 03</span><b>Question</b><small>Embed the user query</small></button>
+<button class="stage" data-step="3"><span class="num">STEP 04</span><b>Retrieve</b><small>Rank relevant chunks</small></button>
+<button class="stage" data-step="4"><span class="num">STEP 05</span><b>Generate</b><small>Answer with context</small></button>
+</nav>
+<div class="layout">
+<section>
+<div class="panel" id="step0">
+<div class="step-title"><div class="bubble">1</div><div><h2>Load the knowledge base</h2><div class="sub">These example documents are the information your RAG system can use.</div></div></div>
+<label for="documents">Documents (one document per block; use a blank line between documents)</label>
+<textarea id="documents">RAG stands for Retrieval-Augmented Generation. It connects a language model to an external knowledge source so the model can answer using retrieved information.
+
+A typical RAG pipeline first parses documents, splits them into smaller chunks, and creates an embedding for each chunk. The chunks and their embeddings are stored in a searchable index or vector database.
+
+When a user asks a question, the system embeds the question and compares it with stored chunk embeddings. Similar chunks are retrieved and added to the prompt as context for the language model.
+
+Embeddings are numerical representations of text that capture aspects of meaning. Similar meanings often map to nearby vectors, but embeddings do not contain a ready-made answer.
+
+RAG can make answers more grounded in supplied documents, but it does not guarantee correctness. Poor source documents, weak retrieval, or misleading context can still produce wrong answers.</textarea>
+<div class="rowbtn"><button class="primary" id="loadDocs">Load documents</button><button class="secondary" id="resetDocs">Restore example</button></div>
+<div class="status" id="docStatus">Example knowledge base is ready.</div>
+</div>
+<div class="panel" id="step1">
+<div class="step-title"><div class="bubble">2</div><div><h2>Chunk and embed</h2><div class="sub">Split the source text into smaller passages, then represent each passage numerically.</div></div></div>
+<label for="chunkSize">Chunking style</label><select id="chunkSize"><option value="sentence">Sentence groups (easy to inspect)</option><option value="paragraph">Paragraphs</option></select>
+<div class="rowbtn"><button class="primary" id="makeChunks">Chunk documents + create embeddings</button></div>
+<div class="explain">In a production system, embeddings come from an embedding model and are stored in a vector index. This demo uses a tiny, deterministic word-feature vector so you can see the concept. It is <b>not</b> a real semantic embedding model.</div>
+<div id="chunkOutput" class="chunk-grid" style="margin-top:12px"><p class="tiny">Run this step to inspect the chunks.</p></div>
+</div>
+<div class="panel" id="step2">
+<div class="step-title"><div class="bubble">3</div><div><h2>Ask a question</h2><div class="sub">The user's question is embedded using the same demo representation.</div></div></div>
+<label for="question">Your question</label><input id="question" value="How does RAG use embeddings to answer a question?">
+<div class="rowbtn"><button class="primary" id="embedQuestion">Embed question</button><button class="secondary" id="exampleQuestion">Try another question</button></div>
+<div id="queryVector" class="vectors"><div class="vector"><b>Query vector</b><code>Not created yet</code></div></div>
+<div class="explain">The question does not usually get appended to the document index. Instead, it is converted into a query vector used to search the stored chunk vectors.</div>
+</div>
+</section>
+<section>
+<div class="panel" id="step3">
+<div class="step-title"><div class="bubble">4</div><div><h2>Retrieve relevant chunks</h2><div class="sub">Compare the question with chunk vectors and rank likely matches.</div></div></div>
+<label for="topK">How many chunks should be retrieved?</label><select id="topK"><option value="1">Top 1 chunk</option><option value="2" selected>Top 2 chunks</option><option value="3">Top 3 chunks</option><option value="5">Top 5 chunks</option></select>
+<div class="rowbtn"><button class="primary" id="retrieve">Search knowledge base</button></div>
+<div id="retrievalOutput"><p class="tiny">Create chunks and embed a question, then retrieve.</p></div>
+<div class="explain">This simulator ranks using cosine similarity over simplified word-feature vectors. Real systems may use neural embeddings, metadata filters, keyword search, reranking, or hybrid retrieval.</div>
+</div>
+<div class="panel" id="step4">
+<div class="step-title"><div class="bubble">5</div><div><h2>Generate an answer</h2><div class="sub">The LLM receives the question plus retrieved text as context.</div></div></div>
+<div class="rowbtn"><button class="primary" id="generate">Build augmented prompt + answer</button></div>
+<div id="promptOutput" class="hidden" style="margin-top:12px">
+<label>Prompt sent to the language model (illustrative)</label><textarea id="augmentedPrompt" readonly style="min-height:155px"></textarea>
+<div class="answer" style="margin-top:12px"><h3>Simulated answer</h3><p id="answerText"></p></div>
+</div>
+<div class="explain">This final answer is a rule-based simulation that quotes/summarizes retrieved context; it does not call a real LLM. In a live RAG app, the augmented prompt is sent to a language model to generate a natural-language answer.</div>
+</div>
+<div class="panel">
+<h2>Quick knowledge check</h2><p class="sub">Test the most important distinction in the pipeline.</p>
+<div class="quiz" id="quiz">
+<button data-correct="false">The LLM chunks and embeds every document after every question.</button>
+<button data-correct="true">Documents are indexed beforehand; each question triggers retrieval, then generation.</button>
+<button data-correct="false">Embeddings are the final answer written for the user.</button>
+</div><div id="quizFeedback" class="status" aria-live="polite">Choose an answer.</div>
+</div>
+</section>
+</div>
+<div class="footer">Learning model only · No network requests · Your text stays in this browser page</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const original=$('documents').value;
+let docs=[],chunks=[],queryVector=null,retrieved=[];
+const STOP=new Set(('the a an and or to of in on for is are was were be been being it this that with as by from into at how does do can using use each user when then than so but not have has their your about').split(' '));
+function tokenize(s){return (s.toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>!STOP.has(w)&&w.length>1)}
+function splitDocs(text){return text.split(/\n\s*\n/).map(s=>s.trim()).filter(Boolean)}
+function features(text){let v={};for(const w of tokenize(text))v[w]=(v[w]||0)+1;return v}
+function vecPreview(v){let entries=Object.entries(v).sort((a,b)=>b[1]-a[1]).slice(0,5);return entries.length?entries.map(([w,n])=>w+':'+n).join(', ')+' …':'(no features)'}
+function cosine(a,b){let dot=0,na=0,nb=0;for(const [k,x] of Object.entries(a)){na+=x*x;dot+=x*(b[k]||0)}for(const x of Object.values(b))nb+=x*x;return na&&nb?dot/(Math.sqrt(na)*Math.sqrt(nb)):0}
+function buildChunks(){docs=splitDocs($('documents').value);let raw=[];docs.forEach((d,di)=>{let pieces;if($('chunkSize').value==='paragraph')pieces=[d];else{const s=d.match(/[^.!?]+[.!?]?/g)||[d];pieces=[];for(let i=0;i<s.length;i+=2)pieces.push(s.slice(i,i+2).join(' ').trim())}pieces.filter(Boolean).forEach((t,pi)=>raw.push({id:raw.length+1,doc:di+1,text:t,vector:features(t)}))});chunks=raw;queryVector=null;retrieved=[];renderChunks();$('queryVector').innerHTML='<div class="vector"><b>Query vector</b><code>Not created yet</code></div>';$('retrievalOutput').innerHTML='<p class="tiny">Embed the question, then retrieve.</p>';$('promptOutput').classList.add('hidden');$('docStatus').textContent=`Loaded ${docs.length} document(s). Created ${chunks.length} chunks; embeddings are represented by demo word vectors.`}
+function renderChunks(){$('chunkOutput').innerHTML=chunks.map(c=>`<article class="chunk"><h4>Chunk ${c.id} · Document ${c.doc}</h4><p>${esc(c.text)}</p><div class="meta">Demo vector features: ${esc(vecPreview(c.vector))}</div></article>`).join('')||'<p class="tiny">No documents found. Add text and load documents.</p>'}
+function embedQuestion(){queryVector=features($('question').value);$('queryVector').innerHTML=`<div class="vector"><b>Question vector</b><code>${esc(vecPreview(queryVector))}</code></div><div class="vector"><b>Distinct features</b><code>${Object.keys(queryVector).length}</code></div><div class="vector"><b>Question text</b><code>${esc($('question').value.slice(0,55)||'(empty)')}</code></div>`;retrieved=[];$('retrievalOutput').innerHTML='<p class="tiny">Question embedded. Now search the knowledge base.</p>';$('promptOutput').classList.add('hidden')}
+function doRetrieve(){if(!chunks.length)buildChunks();if(!queryVector)embedQuestion();let ranked=chunks.map(c=>({...c,score:cosine(queryVector,c.vector)})).sort((a,b)=>b.score-a.score);retrieved=ranked.slice(0,Math.min(+$('topK').value,ranked.length));$('retrievalOutput').innerHTML=ranked.length?retrieved.map((c,i)=>`<div class="retrieved"><h4>${i+1}. Chunk ${c.id} <span class="pill green">Retrieved</span></h4><p>${esc(c.text)}</p><div class="score-row"><div class="scorebar"><span style="width:${Math.round(c.score*100)}%"></span></div><div class="score">${(c.score*100).toFixed(0)}%</div></div><div class="tiny">Similarity score (demo): ${(c.score).toFixed(3)} · Document ${c.doc}</div></div>`).join(''):'<p class="tiny">No chunks to search.</p>';if(!ranked.length)$('retrievalOutput').innerHTML='<p class="tiny">No chunks to search.</p>';$('promptOutput').classList.add('hidden')}
+function generate(){if(!retrieved.length)doRetrieve();let context=retrieved.filter(c=>c.score>0).map(c=>`[Chunk ${c.id}] ${c.text}`).join('\n\n');if(!context)context='No strongly matching text was found in the selected chunks.';let prompt=`You are an assistant. Answer the question using only the context below. If the context does not contain the answer, say that the knowledge base does not provide enough information.\n\nCONTEXT:\n${context}\n\nQUESTION:\n${$('question').value}\n\nANSWER:`;$('augmentedPrompt').value=prompt;let sentences=retrieved.filter(c=>c.score>0).map(c=>c.text);let answer=sentences.length?sentences.join(' '):'I could not find a sufficiently matching passage in the retrieved chunks. Try rephrasing the question or adding relevant documents.';$('answerText').textContent=answer;$('promptOutput').classList.remove('hidden')}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('loadDocs').onclick=buildChunks;$('makeChunks').onclick=buildChunks;$('resetDocs').onclick=()=>{$('documents').value=original;buildChunks()};$('embedQuestion').onclick=embedQuestion;$('retrieve').onclick=doRetrieve;$('generate').onclick=generate;
+$('exampleQuestion').onclick=()=>{const qs=['What does RAG stand for?','Why are documents split into chunks?','Do embeddings guarantee a correct answer?','What happens after a user asks a question?'];let current=qs.indexOf($('question').value);$('question').value=qs[(current+1)%qs.length];embedQuestion()};
+document.querySelectorAll('.stage').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.stage').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('step'+b.dataset.step).scrollIntoView({behavior:'smooth',block:'start'})}));
+$('quiz').querySelectorAll('button').forEach(b=>b.onclick=()=>{const correct=b.dataset.correct==='true';$('quiz').querySelectorAll('button').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(correct?'correct':'wrong');$('quizFeedback').textContent=correct?'Correct! Indexing is generally done ahead of time; each new question triggers query embedding, retrieval, and generation.':'Not quite. Remember: prepare and index documents beforehand; retrieve relevant chunks for each new question.'});
+buildChunks();
+</script>
+</body>
+</html>
